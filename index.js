@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import postsRouter from './routers/postsRouter.js';
+import userRouter from './routers/userRouter.js';
 import dotenv from 'dotenv';
 
 /////////////////CREATE EXPRESS-APP
@@ -17,6 +18,7 @@ app.use(cors());
 
 /////////////////SET ROUTES
 app.use('/api/v1/posts', postsRouter);
+app.use('/api/v1/user', userRouter);
 app.use('*', (req, res) => res.status(404).json({ error: 'not found' }));
 //////////////// CONNECT TO DATABASE
 
