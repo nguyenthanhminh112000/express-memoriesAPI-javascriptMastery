@@ -7,6 +7,7 @@ export const signin = async (req, res) => {
   try {
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
+      console.log('achieved');
       return res.status(404).json({ message: "User doesn't exist." });
     }
     const isPasswordCorrect = await bcrypt.compare(
@@ -17,12 +18,12 @@ export const signin = async (req, res) => {
       return res.status(400).json({ message: 'Invalid password' });
     }
     const token = jwt.sign(
-      { email: existingUser.email, _id: existingUser._id },
+      { email: existingUser.email, id: existingUser._id },
       'privateString',
-      { expiresIn: '1h' }
+      { expiresIn: '5s' }
     );
     const result = {
-      _id: existingUser._id,
+      id: existingUser._id,
       email: existingUser.email,
       name: existingUser.name,
     };
@@ -33,7 +34,6 @@ export const signin = async (req, res) => {
 };
 export const signup = async (req, res) => {
   const { email, password, confirmPassword, firstName, lastName } = req.body;
-  console.log(req.body);
   if (password !== confirmPassword) {
     return res.status(400).json({ message: "Password don't match." });
   }
@@ -48,18 +48,18 @@ export const signup = async (req, res) => {
       name: `${firstName} ${lastName}`,
     });
     const result = {
-      _id: createdResult._id,
+      id: createdResult._id,
       email: createdResult.email,
       name: createdResult.name,
     };
     const token = jwt.sign(
-      { email: result.email, _id: result._id },
+      { email: result.email, id: result._id },
       'privateString',
       { expiresIn: '1h' }
     );
+    console.log(token);
     return res.status(200).json({ result, token });
   } catch (error) {
-    console.log(error.message);
     res.status(500).json({ message: 'Something went wrong' });
   }
 };
