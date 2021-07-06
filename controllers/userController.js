@@ -20,7 +20,7 @@ export const signin = async (req, res) => {
     const token = jwt.sign(
       { email: existingUser.email, id: existingUser._id },
       'privateString',
-      { expiresIn: '5s' }
+      { expiresIn: '1h' }
     );
     const result = {
       id: existingUser._id,
