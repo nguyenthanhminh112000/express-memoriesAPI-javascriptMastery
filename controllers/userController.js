@@ -7,7 +7,6 @@ export const signin = async (req, res) => {
   try {
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
-      console.log('achieved');
       return res.status(404).json({ message: "User doesn't exist." });
     }
     const isPasswordCorrect = await bcrypt.compare(
@@ -57,7 +56,6 @@ export const signup = async (req, res) => {
       'privateString',
       { expiresIn: '1h' }
     );
-    console.log(token);
     return res.status(200).json({ result, token });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });

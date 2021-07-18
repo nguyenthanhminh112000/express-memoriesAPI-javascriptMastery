@@ -19,6 +19,9 @@ app.use(cors());
 /////////////////SET ROUTES
 app.use('/api/v1/posts', postsRouter);
 app.use('/api/v1/user', userRouter);
+app.get('/', (req, res) => {
+  res.send('App is running.');
+});
 app.use('*', (req, res) => res.status(404).json({ error: 'not found' }));
 //////////////// CONNECT TO DATABASE
 
