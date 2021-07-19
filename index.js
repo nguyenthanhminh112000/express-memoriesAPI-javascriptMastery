@@ -15,7 +15,15 @@ app.use(express.json());
 app.use(express.urlencoded());
 // enable cors
 app.use(cors());
-
+app.use(
+  cors({
+    allowedHeaders: ['authorization', 'Content-Type'], // you can change the headers
+    exposedHeaders: ['authorization'], // you can change the headers
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+  })
+);
 /////////////////SET ROUTES
 app.use('/api/v1/posts', postsRouter);
 app.use('/api/v1/user', userRouter);
